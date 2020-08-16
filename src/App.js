@@ -1,24 +1,25 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect } from 'react';
 import './App.css';
 import Post from './Post';
+import { db } from './firebase';
 
 function App() {
-  const [posts, setPosts] = useState([
-    {
-      username:"sajjanm01",
-      caption:"Happy! I feel happy!",
-      imageUrl:"https://create-react-app.dev/img/logo.svg" 
-    },
-    {
-      username:"Abhishek",
-      caption:"Dang! It is working",
-      imageUrl:"https://create-react-app.dev/img/logo.svg" 
-    }
-  ]);
+  const [posts, setPosts] = useState([ ]);
+
+  // UseEffect Runs a peice of code based on a specific conditions
+
+  useEffect(() => {
+    // this is where the code runs
+    db.collection('posts').onSnapshot(snapshot => {
+        // everytime a new post is added, this code fire
+      setPosts(snapshot.docs.map(doc => doc.data()));
+    })
+
+  }, []);
 
   return (
     <div className="app">
-      <div class="app__header">
+      <div className="app__header">
         <img
           className="app__headerImage"
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo-2x.png/1b47f9d0e595.png"
