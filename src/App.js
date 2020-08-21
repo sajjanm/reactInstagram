@@ -126,8 +126,11 @@ function App() {
         />
       </div>
       
-      <Button onClick={() => setOpen(true)}>Sign Up</Button>
-
+      {user ? (
+        <Button onClick={() => auth.signOut()}>Logout</Button>
+      ) : (
+        <Button onClick={() => setOpen(true)}>Sign Up</Button>
+      )}
       <h1>Hey guys! Let's build an Instagram Clone app with React!</h1>
 
       {
